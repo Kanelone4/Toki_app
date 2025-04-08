@@ -1,0 +1,359 @@
+/* Reset et styles de base pour éviter les conflits */
+.toki-container *,
+.toki-container *::before,
+.toki-container *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Container principal */
+.toki-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  padding: 2rem 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.toki-content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Header */
+.toki-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.toki-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #212529;
+  margin-bottom: 0.5rem;
+}
+
+.toki-subtitle {
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* Loading */
+.toki-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.toki-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #00b0ff;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Avatars */
+.toki-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid #e9ecef;
+}
+
+.toki-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.toki-avatar-small {
+  width: 32px;
+  height: 32px;
+}
+
+/* Nouveau post */
+.toki-new-post {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+.toki-new-post-input {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.toki-textarea {
+  flex: 1;
+  border: none;
+  background-color: #f0f2f5;
+  border-radius: 20px;
+  padding: 0.75rem 1rem;
+  resize: none;
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.toki-textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 176, 255, 0.2);
+}
+
+.toki-image-preview {
+  position: relative;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.toki-image-preview img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.toki-remove-image {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(255, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.toki-post-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Boutons */
+.toki-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  border: none;
+  transition: background-color 0.2s;
+}
+
+.toki-btn-primary {
+  background-color: #00b0ff;
+  color: white;
+}
+
+.toki-btn-primary:hover {
+  background-color: #0091ea;
+}
+
+.toki-btn-secondary {
+  background-color: #f0f2f5;
+  color: #4b4f56;
+}
+
+.toki-btn-secondary:hover {
+  background-color: #e4e6eb;
+}
+
+.toki-btn-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.toki-icon {
+  margin-right: 0.5rem;
+}
+
+/* Posts */
+.toki-posts {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.toki-post {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.toki-post-header {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #f0f2f5;
+}
+
+.toki-post-author {
+  margin-left: 0.75rem;
+}
+
+.toki-author-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #212529;
+}
+
+.toki-post-time {
+  font-size: 0.75rem;
+  color: #6c757d;
+}
+
+.toki-post-content {
+  padding: 1rem;
+}
+
+.toki-post-content p {
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.toki-post-image {
+  margin: 0 -1rem;
+}
+
+.toki-post-image img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.toki-post-actions {
+  display: flex;
+  padding: 0.5rem 1rem;
+  border-top: 1px solid #f0f2f5;
+  border-bottom: 1px solid #f0f2f5;
+}
+.toki-post-actions span {
+  min-width: 60px;
+  display: inline-block;
+}
+
+.toki-action-btn {
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  margin-right: 1rem;
+  font-size: 0.875rem;
+  color: #65676b;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.toki-action-btn:hover {
+  background-color: #f0f2f5;
+}
+
+.toki-liked {
+  color: #e41e3f;
+}
+
+.toki-icon-filled {
+  fill: #e41e3f;
+  stroke: #ef4444;
+}
+
+/* Commentaires */
+.toki-comments {
+  padding: 1rem;
+}
+
+.toki-comments-list {
+  margin-bottom: 1rem;
+}
+
+.toki-comment {
+  display: flex;
+  margin-bottom: 0.75rem;
+}
+
+.toki-comment-bubble {
+  background-color: #f0f2f5;
+  border-radius: 18px;
+  padding: 0.5rem 0.75rem;
+  margin-left: 0.5rem;
+  max-width: calc(100% - 40px);
+}
+
+.toki-comment-author {
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.toki-comment-text {
+  font-size: 0.875rem;
+  margin-bottom: 0.25rem;
+}
+
+.toki-comment-time {
+  font-size: 0.7rem;
+  color: #65676b;
+}
+
+.toki-comment-form {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toki-comment-input {
+  flex: 1;
+  border: none;
+  background-color: #f0f2f5;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+.toki-comment-input:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 176, 255, 0.2);
+}
+
+.toki-send-btn {
+  background: none;
+  border: none;
+  color: #00b0ff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.toki-send-btn:hover {
+  background-color: rgba(0, 176, 255, 0.1);
+}
