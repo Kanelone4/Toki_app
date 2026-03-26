@@ -5,20 +5,15 @@ import MobileNav from "../components/MobileNav"
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen">
-      {/* Mobile Header */}
+    <div className="min-h-screen bg-[var(--color-bg)]">
       <MobileNav />
       
-      {/* Main Layout */}
-      <div className="flex justify-center">
-        {/* Left Sidebar - Hidden on mobile/tablet */}
+      <div className="flex">
         <Sidebar />
         
-        {/* Main Content */}
-        <main className="flex-1 min-h-screen max-w-[1200px]">
-          <div className="flex">
+        <main className="flex-1 flex justify-center">
+          <div className="flex w-full max-w-[1100px]">
             <SocialFeed />
-            {/* Right Sidebar - Hidden on smaller screens */}
             <RightSidebar />
           </div>
         </main>

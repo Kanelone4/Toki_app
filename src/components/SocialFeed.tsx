@@ -20,8 +20,7 @@ export default function SocialFeed() {
             name: "George Lobko",
             avatar: "https://randomuser.me/api/portraits/men/75.jpg",
           },
-          content:
-            "Hi everyone, today I was on the most beautiful mountain in the world! I also want to say hi to @Silena, @Olya and @Davis!",
+          content: "Hi everyone, today I was on the most beautiful mountain in the world! I also want to say hi to @Silena, @Olya and @Davis!",
           images: [
             "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop",
             "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
@@ -31,11 +30,7 @@ export default function SocialFeed() {
           comments: [
             {
               id: "1",
-              author: {
-                id: "2",
-                name: "Thomas Dubois",
-                avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-              },
+              author: { id: "2", name: "Thomas Dubois", avatar: "https://randomuser.me/api/portraits/men/45.jpg" },
               content: "Wow! This is amazing! Where is this place?",
               timestamp: "2h",
             },
@@ -50,8 +45,7 @@ export default function SocialFeed() {
             name: "Vitaliy Boyko",
             avatar: "https://randomuser.me/api/portraits/men/32.jpg",
           },
-          content:
-            "I chose a wonderful coffee today, I wanted to tell you what product they have in stock - it's a latte with coconut milk... delicious... it's really incredibly tasty!!!",
+          content: "I chose a wonderful coffee today, I wanted to tell you what product they have in stock - it's a latte with coconut milk... delicious... it's really incredibly tasty!!!",
           likes: 6355,
           comments: [],
           timestamp: "3 hours ago",
@@ -69,11 +63,7 @@ export default function SocialFeed() {
           comments: [
             {
               id: "3",
-              author: {
-                id: "6",
-                name: "Marie Dupont",
-                avatar: "https://randomuser.me/api/portraits/women/12.jpg",
-              },
+              author: { id: "6", name: "Marie Dupont", avatar: "https://randomuser.me/api/portraits/women/12.jpg" },
               content: "This looks great! What stack did you use?",
               timestamp: "1h",
             },
@@ -82,81 +72,64 @@ export default function SocialFeed() {
         },
       ])
       setIsLoading(false)
-    }, 600)
+    }, 500)
   }, [])
 
   const handleAddPost = (newPost: Omit<Post, "id" | "likes" | "comments" | "timestamp">) => {
-    const post: Post = {
-      id: Date.now().toString(),
-      ...newPost,
-      likes: 0,
-      comments: [],
-      timestamp: "Just now",
-    }
-    setPosts([post, ...posts])
+    setPosts([{ id: Date.now().toString(), ...newPost, likes: 0, comments: [], timestamp: "Just now" }, ...posts])
   }
 
   const handleLike = (postId: string) => {
-    setPosts(posts.map((post) => (post.id === postId ? { ...post, likes: post.likes + 1 } : post)))
+    setPosts(posts.map((p) => (p.id === postId ? { ...p, likes: p.likes + 1 } : p)))
   }
 
   const handleDislike = (postId: string) => {
-    setPosts(posts.map((post) => (post.id === postId ? { ...post, likes: Math.max(0, post.likes - 1) } : post)))
+    setPosts(posts.map((p) => (p.id === postId ? { ...p, likes: Math.max(0, p.likes - 1) } : p)))
   }
 
   const handleAddComment = (postId: string, comment: string) => {
     setPosts(
-      posts.map((post) => {
-        if (post.id === postId) {
-          return {
-            ...post,
-            comments: [
-              ...post.comments,
-              {
-                id: Date.now().toString(),
-                author: {
-                  id: "4",
-                  name: "You",
-                  avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+      posts.map((p) =>
+        p.id === postId
+          ? {
+              ...p,
+              comments: [
+                ...p.comments,
+                {
+                  id: Date.now().toString(),
+                  author: { id: "4", name: "You", avatar: "https://randomuser.me/api/portraits/women/44.jpg" },
+                  content: comment,
+                  timestamp: "Just now",
                 },
-                content: comment,
-                timestamp: "Just now",
-              },
-            ],
-          }
-        }
-        return post
-      }),
+              ],
+            }
+          : p
+      )
     )
   }
 
   if (isLoading) {
     return (
-      <div className="flex-1 max-w-[640px] mx-auto px-4 lg:px-6 py-6">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-3 border-[var(--color-border)] border-t-[var(--color-primary)] rounded-full animate-spin"></div>
-            <p className="text-sm text-[var(--color-muted)]">Loading posts...</p>
-          </div>
-        </div>
+      <div className="flex-1 p-5 flex items-center justify-center min-h-[400px]">
+        <div className="w-8 h-8 border-3 border-[var(--color-border)] border-t-[var(--color-primary)] rounded-full animate-spin" />
       </div>
     )
   }
 
   return (
-    <div className="flex-1 max-w-[640px] mx-auto px-4 lg:px-6 py-6 pb-24 lg:pb-6">
-      {/* Header with tabs */}
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Feeds</h1>
-        <div className="flex gap-1 bg-white/80 backdrop-blur-sm rounded-full p-1.5 shadow-[var(--shadow)]">
+    <div className="flex-1 p-5 pb-24 lg:pb-5 max-w-[600px]">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-5">
+        <h1 className="text-xl font-bold text-[var(--color-text)]">Feeds</h1>
+        <div className="flex gap-1 bg-[var(--color-white)] rounded-lg p-1 border border-[var(--color-border)]">
           {(["recents", "friends", "popular"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
+              className={`px-3 py-1.5 text-sm font-medium rounded-md transition-colors ${
                 activeTab === tab
-                  ? "bg-[var(--color-primary)] text-white shadow-md"
-                  : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-white/50"
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-soft)]"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -166,24 +139,14 @@ export default function SocialFeed() {
       </div>
 
       {/* Posts */}
-      <div className="space-y-5">
-        {posts.map((post, index) => (
-          <div 
-            key={post.id}
-            style={{ animationDelay: `${index * 80}ms` }}
-            className="animate-[fadeIn_0.4s_ease-out_forwards] opacity-0"
-          >
-            <PostCard
-              post={post}
-              onLike={handleLike}
-              onDislike={handleDislike}
-              onAddComment={handleAddComment}
-            />
+      <div className="space-y-4">
+        {posts.map((post, i) => (
+          <div key={post.id} style={{ animationDelay: `${i * 60}ms` }} className="animate-[fadeIn_0.3s_ease-out_forwards] opacity-0">
+            <PostCard post={post} onLike={handleLike} onDislike={handleDislike} onAddComment={handleAddComment} />
           </div>
         ))}
       </div>
 
-      {/* New Post Form at bottom */}
       <NewPostForm onAddPost={handleAddPost} />
     </div>
   )
