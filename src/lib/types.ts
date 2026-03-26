@@ -16,7 +16,9 @@ export interface Post {
   author: Author
   content: string
   image?: string
+  images?: string[]
   likes: number
   comments: Comment[]
   timestamp: string
+  reactions?: string[]
 }

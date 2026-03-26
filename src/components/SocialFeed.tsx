@@ -4,11 +4,11 @@ import { useState, useEffect } from "react"
 import PostCard from "./PostCard"
 import NewPostForm from "./NewPostForm"
 import type { Post } from "../lib/types"
-import "../styles/social.css"
 
 export default function SocialFeed() {
   const [posts, setPosts] = useState<Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [activeTab, setActiveTab] = useState<"recents" | "friends" | "popular">("recents")
 
   useEffect(() => {
     setTimeout(() => {
@@ -17,13 +17,17 @@ export default function SocialFeed() {
           id: "1",
           author: {
             id: "1",
-            name: "Sophie Martin",
-            avatar: "https://randomuser.me/api/portraits/women/32.jpg",
+            name: "George Lobko",
+            avatar: "https://randomuser.me/api/portraits/men/75.jpg",
           },
           content:
-            "Bonjour à tous! Je viens de terminer mon nouveau projet React. J'ai utilisé les dernières fonctionnalités de React 18 et j'ai vraiment apprécié l'expérience. Qu'en pensez-vous?",
-          image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2",
-          likes: 15,
+            "Hi everyone, today I was on the most beautiful mountain in the world! I also want to say hi to @Silena, @Olya and @Davis!",
+          images: [
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=300&fit=crop",
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=300&fit=crop",
+          ],
+          likes: 6355,
           comments: [
             {
               id: "1",
@@ -32,36 +36,36 @@ export default function SocialFeed() {
                 name: "Thomas Dubois",
                 avatar: "https://randomuser.me/api/portraits/men/45.jpg",
               },
-              content: "C'est vraiment impressionnant! J'adore le design et la façon dont tu as structuré le code.",
+              content: "Wow! This is amazing! Where is this place?",
               timestamp: "2h",
             },
           ],
-          timestamp: "3h",
+          timestamp: "2 hours ago",
+          reactions: ["like", "love", "wow"],
         },
         {
           id: "2",
           author: {
             id: "3",
-            name: "Emma Leclerc",
-            avatar: "https://randomuser.me/api/portraits/women/65.jpg",
+            name: "Vitaliy Boyko",
+            avatar: "https://randomuser.me/api/portraits/men/32.jpg",
           },
           content:
-            "Je viens de découvrir cette nouvelle bibliothèque JavaScript pour la gestion d'état. Elle est incroyablement simple à utiliser et très performante!",
-          image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c",
-          likes: 8,
+            "I chose a wonderful coffee today, I wanted to tell you what product they have in stock - it's a latte with coconut milk... delicious... it's really incredibly tasty!!!",
+          likes: 6355,
           comments: [],
-          timestamp: "5h",
+          timestamp: "3 hours ago",
         },
         {
           id: "3",
           author: {
             id: "5",
-            name: "Lucas Bernard",
-            avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+            name: "Sophie Martin",
+            avatar: "https://randomuser.me/api/portraits/women/32.jpg",
           },
-          content: "Journée parfaite pour coder en plein air! Le soleil, un bon café et VS Code, que demander de plus?",
-          image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-          likes: 23,
+          content: "Just finished my new React project. Used the latest features of React 18 and really enjoyed the experience. What do you think?",
+          images: ["https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?w=600&h=400&fit=crop"],
+          likes: 1523,
           comments: [
             {
               id: "3",
@@ -70,25 +74,15 @@ export default function SocialFeed() {
                 name: "Marie Dupont",
                 avatar: "https://randomuser.me/api/portraits/women/12.jpg",
               },
-              content: "Ça a l'air génial! Quel projet travailles-tu en ce moment?",
+              content: "This looks great! What stack did you use?",
               timestamp: "1h",
             },
-            {
-              id: "4",
-              author: {
-                id: "5",
-                name: "Lucas Bernard",
-                avatar: "https://randomuser.me/api/portraits/men/22.jpg",
-              },
-              content: "Je développe une application de gestion de tâches avec React et TypeScript!",
-              timestamp: "45min",
-            },
           ],
-          timestamp: "6h",
+          timestamp: "5 hours ago",
         },
       ])
       setIsLoading(false)
-    }, 1000)
+    }, 800)
   }, [])
 
   const handleAddPost = (newPost: Omit<Post, "id" | "likes" | "comments" | "timestamp">) => {
@@ -97,7 +91,7 @@ export default function SocialFeed() {
       ...newPost,
       likes: 0,
       comments: [],
-      timestamp: "À l'instant",
+      timestamp: "Just now",
     }
     setPosts([post, ...posts])
   }
@@ -122,11 +116,11 @@ export default function SocialFeed() {
                 id: Date.now().toString(),
                 author: {
                   id: "4",
-                  name: "Vous",
+                  name: "You",
                   avatar: "https://randomuser.me/api/portraits/women/44.jpg",
                 },
                 content: comment,
-                timestamp: "À l'instant",
+                timestamp: "Just now",
               },
             ],
           }
@@ -138,34 +132,54 @@ export default function SocialFeed() {
 
   if (isLoading) {
     return (
-      <div className="toki-loading">
-        <div className="toki-spinner"></div>
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="w-10 h-10 border-3 border-[var(--color-border)] border-t-[var(--color-primary)] rounded-full animate-spin"></div>
       </div>
     )
   }
 
   return (
-    <div className="toki-container">
-      <div className="toki-content">
-        <div className="toki-header">
-          <h1 className="toki-title">Toki Talk</h1>
-          <p className="toki-subtitle">Découvrez ce que partagent vos amis</p>
+    <div className="flex-1 max-w-2xl mx-auto px-4 py-6">
+      {/* Header with tabs */}
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Feeds</h1>
+        <div className="flex gap-1 bg-white rounded-full p-1 shadow-sm">
+          {(["recents", "friends", "popular"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+                activeTab === tab
+                  ? "bg-[var(--color-primary)] text-white"
+                  : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
+              }`}
+            >
+              {tab.charAt(0).toUpperCase() + tab.slice(1)}
+            </button>
+          ))}
         </div>
+      </div>
 
-        <NewPostForm onAddPost={handleAddPost} />
-
-        <div className="toki-posts">
-          {posts.map((post) => (
+      {/* Posts */}
+      <div className="space-y-4">
+        {posts.map((post, index) => (
+          <div 
+            key={post.id}
+            style={{ animationDelay: `${index * 100}ms` }}
+            className="animate-[fadeIn_0.4s_ease-out_forwards] opacity-0"
+          >
             <PostCard
-              key={post.id}
               post={post}
               onLike={handleLike}
               onDislike={handleDislike}
               onAddComment={handleAddComment}
             />
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
+
+      {/* New Post Form at bottom */}
+      <NewPostForm onAddPost={handleAddPost} />
     </div>
   )
 }

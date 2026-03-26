@@ -2,7 +2,7 @@
 
 import type React from "react"
 import { useState, useRef } from "react"
-import { ImageIcon, X, Smile, MapPin, Tag, Calendar } from "lucide-react"
+import { ImageIcon, X, MapPin, Globe, Send, ChevronDown } from "lucide-react"
 import type { Post } from "../lib/types"
 
 interface NewPostFormProps {
@@ -12,7 +12,6 @@ interface NewPostFormProps {
 export default function NewPostForm({ onAddPost }: NewPostFormProps) {
   const [content, setContent] = useState("")
   const [image, setImage] = useState("")
-  const [isExpanded, setIsExpanded] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,7 +20,7 @@ export default function NewPostForm({ onAddPost }: NewPostFormProps) {
       onAddPost({
         author: {
           id: "4",
-          name: "Vous",
+          name: "You",
           avatar: "https://randomuser.me/api/portraits/women/44.jpg",
         },
         content,
@@ -29,7 +28,6 @@ export default function NewPostForm({ onAddPost }: NewPostFormProps) {
       })
       setContent("")
       setImage("")
-      setIsExpanded(false)
     }
   }
 
@@ -38,81 +36,99 @@ export default function NewPostForm({ onAddPost }: NewPostFormProps) {
   }
 
   const handleImageUpload = () => {
-    // Simuler un téléchargement d'image
-    setImage("https://images.unsplash.com/photo-1682687982501-1e58ab814714")
+    setImage("https://images.unsplash.com/photo-1682687982501-1e58ab814714?w=600&h=400&fit=crop")
   }
 
   return (
-    <div className="toki-new-post">
-      <div className="toki-new-post-header">
-        <h3>Créer une publication</h3>
-      </div>
+    <div className="bg-white rounded-2xl shadow-sm p-4 mt-4">
       <form onSubmit={handleSubmit}>
-        <div className="toki-new-post-input">
-          <div className="toki-avatar">
-            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Your profile" />
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+            <img 
+              src="https://randomuser.me/api/portraits/women/44.jpg" 
+              alt="Your profile"
+              className="w-full h-full object-cover"
+            />
           </div>
-          <textarea
-            className="toki-textarea"
-            placeholder="Quoi de neuf?"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            onClick={() => setIsExpanded(true)}
-            rows={isExpanded ? 3 : 1}
-          />
+          <div className="flex-1">
+            <input
+              type="text"
+              placeholder="Share something..."
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full bg-[var(--color-secondary)] rounded-full px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[var(--color-primary)]/20 transition-all placeholder:text-[var(--color-muted)]"
+            />
+          </div>
         </div>
 
-        {isExpanded && (
-          <>
-            {image && (
-              <div className="toki-image-preview">
-                <img src={image || "/placeholder.svg"} alt="Post preview" />
-                <button type="button" className="toki-remove-image" onClick={() => setImage("")}>
-                  <X size={16} />
-                  <span className="sr-only">Remove image</span>
-                </button>
-              </div>
-            )}
-
-            <div className="toki-post-tools">
-              <p>Ajouter à votre publication</p>
-              <div className="toki-post-tools-buttons">
-                <button title="Ajouter une image" type="button" className="toki-tool-btn toki-tool-image" onClick={handleFileSelect}>
-                  <ImageIcon size={20} />
-                </button>
-                <button title="Ajouter une image" type="button" className="toki-tool-btn toki-tool-tag">
-                  <Tag size={20} />
-                </button>
-                <button title="Ajouter une image" type="button" className="toki-tool-btn toki-tool-location">
-                  <MapPin size={20} />
-                </button>
-                <button title="Ajouter une image" type="button" className="toki-tool-btn toki-tool-emoji">
-                  <Smile size={20} />
-                </button>
-                <button title="Ajouter une image" type="button" className="toki-tool-btn toki-tool-calendar">
-                  <Calendar size={20} />
-                </button>
-              </div>
-            </div>
-
-            <input
-             aria-label="Ajouter une image"
-              type="file"
-              ref={fileInputRef}
-              style={{ display: "none" }}
-              accept="image/*"
-              onChange={handleImageUpload}
+        {/* Image Preview */}
+        {image && (
+          <div className="mt-3 ml-13 relative rounded-xl overflow-hidden">
+            <img 
+              src={image} 
+              alt="Upload preview"
+              className="w-full h-48 object-cover rounded-xl"
             />
-
-            <button
-              type="submit"
-              className={`toki-btn toki-btn-primary toki-btn-publish ${!content.trim() ? "toki-btn-disabled" : ""}`}
-              disabled={!content.trim()}
+            <button 
+              type="button"
+              onClick={() => setImage("")}
+              className="absolute top-2 right-2 w-7 h-7 bg-black/60 rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
             >
-              Publier
+              <X size={14} />
             </button>
-          </>
+          </div>
         )}
+
+        {/* Actions Bar */}
+        <div className="flex items-center justify-between mt-3 pt-3 border-t border-[var(--color-border)]">
+          <div className="flex items-center gap-1">
+            <button 
+              type="button"
+              onClick={handleFileSelect}
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)] transition-colors"
+            >
+              <ImageIcon size={18} className="text-green-500" />
+              <span className="hidden sm:inline">Image</span>
+            </button>
+            <button 
+              type="button"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)] transition-colors"
+            >
+              <MapPin size={18} className="text-red-500" />
+              <span className="hidden sm:inline">Location</span>
+            </button>
+            <button 
+              type="button"
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-sm text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)] transition-colors"
+            >
+              <Globe size={18} className="text-blue-500" />
+              <span className="hidden sm:inline">Public</span>
+              <ChevronDown size={14} />
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            disabled={!content.trim()}
+            className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all ${
+              content.trim()
+                ? "bg-[var(--color-primary)] text-white hover:bg-[var(--color-primary)]/90"
+                : "bg-[var(--color-secondary)] text-[var(--color-muted)] cursor-not-allowed"
+            }`}
+          >
+            <Send size={16} />
+            <span>Send</span>
+          </button>
+        </div>
+
+        <input
+          aria-label="Upload image"
+          type="file"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
       </form>
     </div>
   )
