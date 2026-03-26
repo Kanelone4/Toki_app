@@ -8,8 +8,7 @@ import {
   Users, 
   Image as ImageIcon, 
   Settings,
-  Download,
-  ChevronDown
+  Download
 } from "lucide-react"
 
 interface NavItem {
@@ -32,44 +31,48 @@ export default function Sidebar() {
   const [activeItem, setActiveItem] = useState("feed")
 
   return (
-    <aside className="hidden lg:flex flex-col w-64 h-screen sticky top-0 bg-white/80 backdrop-blur-sm border-r border-[var(--color-border)]">
+    <aside className="hidden lg:flex flex-col w-[260px] h-screen sticky top-0 bg-white/70 backdrop-blur-xl border-r border-[var(--color-border)]/50">
       {/* User Profile Section */}
-      <div className="p-6 flex flex-col items-center border-b border-[var(--color-border)]">
-        <div className="relative mb-3">
-          <div className="w-20 h-20 rounded-full overflow-hidden ring-4 ring-[var(--color-primary)]/20">
-            <img 
-              src="https://randomuser.me/api/portraits/men/32.jpg" 
-              alt="Bogdan Nikitin"
-              className="w-full h-full object-cover"
-            />
+      <div className="p-6 flex flex-col items-center">
+        <div className="relative mb-4">
+          {/* Gradient ring around avatar */}
+          <div className="w-[88px] h-[88px] rounded-full p-[3px] bg-gradient-to-br from-[var(--color-primary)] via-[var(--color-accent)] to-[var(--color-primary)]">
+            <div className="w-full h-full rounded-full overflow-hidden bg-white p-[2px]">
+              <img 
+                src="https://randomuser.me/api/portraits/men/32.jpg" 
+                alt="Bogdan Nikitin"
+                className="w-full h-full object-cover rounded-full"
+              />
+            </div>
           </div>
-          <div className="absolute bottom-0 right-0 w-5 h-5 bg-[var(--color-success)] rounded-full border-3 border-white"></div>
+          {/* Online indicator */}
+          <div className="absolute bottom-1 right-1 w-5 h-5 bg-[var(--color-success)] rounded-full border-[3px] border-white shadow-sm"></div>
         </div>
         <h2 className="text-lg font-semibold text-[var(--color-foreground)]">Bogdan Nikitin</h2>
         <p className="text-sm text-[var(--color-muted)]">@nikitinteam</p>
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 py-4 px-3 overflow-y-auto">
+      <nav className="flex-1 py-2 px-4 overflow-y-auto">
         <ul className="space-y-1">
           {navItems.map((item) => (
             <li key={item.id}>
               <button
                 onClick={() => setActiveItem(item.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group ${
                   activeItem === item.id
-                    ? "bg-[var(--color-primary)] text-white shadow-lg shadow-[var(--color-primary)]/25"
+                    ? "bg-[var(--color-primary)] text-white shadow-lg shadow-[var(--color-primary)]/30"
                     : "text-[var(--color-muted-foreground)] hover:bg-[var(--color-secondary)] hover:text-[var(--color-foreground)]"
                 }`}
               >
-                <span className={activeItem === item.id ? "text-white" : ""}>
+                <span className={`transition-transform duration-200 ${activeItem !== item.id ? "group-hover:scale-110" : ""}`}>
                   {item.icon}
                 </span>
-                <span className="font-medium">{item.label}</span>
+                <span className="font-medium text-[15px]">{item.label}</span>
                 {item.badge && (
-                  <span className={`ml-auto text-xs font-semibold px-2 py-0.5 rounded-full ${
+                  <span className={`ml-auto text-xs font-semibold min-w-[22px] h-[22px] flex items-center justify-center rounded-full ${
                     activeItem === item.id 
-                      ? "bg-white/20 text-white" 
+                      ? "bg-white/25 text-white" 
                       : "bg-[var(--color-primary)]/10 text-[var(--color-primary)]"
                   }`}>
                     {item.badge}
@@ -82,8 +85,8 @@ export default function Sidebar() {
       </nav>
 
       {/* Download App Section */}
-      <div className="p-4 border-t border-[var(--color-border)]">
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white font-medium hover:opacity-90 transition-opacity">
+      <div className="p-4">
+        <button className="w-full flex items-center justify-center gap-3 px-4 py-3.5 rounded-2xl bg-gradient-to-r from-[var(--color-primary)] to-[var(--color-accent)] text-white font-medium hover:opacity-90 transition-all shadow-lg shadow-[var(--color-primary)]/25 hover:shadow-xl hover:shadow-[var(--color-primary)]/30 hover:-translate-y-0.5">
           <Download size={20} />
           <span>Download the App</span>
         </button>

@@ -82,7 +82,7 @@ export default function SocialFeed() {
         },
       ])
       setIsLoading(false)
-    }, 800)
+    }, 600)
   }, [])
 
   const handleAddPost = (newPost: Omit<Post, "id" | "likes" | "comments" | "timestamp">) => {
@@ -132,26 +132,31 @@ export default function SocialFeed() {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-[400px]">
-        <div className="w-10 h-10 border-3 border-[var(--color-border)] border-t-[var(--color-primary)] rounded-full animate-spin"></div>
+      <div className="flex-1 max-w-[640px] mx-auto px-4 lg:px-6 py-6">
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-10 h-10 border-3 border-[var(--color-border)] border-t-[var(--color-primary)] rounded-full animate-spin"></div>
+            <p className="text-sm text-[var(--color-muted)]">Loading posts...</p>
+          </div>
+        </div>
       </div>
     )
   }
 
   return (
-    <div className="flex-1 max-w-2xl mx-auto px-4 py-6">
+    <div className="flex-1 max-w-[640px] mx-auto px-4 lg:px-6 py-6 pb-24 lg:pb-6">
       {/* Header with tabs */}
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-[var(--color-foreground)]">Feeds</h1>
-        <div className="flex gap-1 bg-white rounded-full p-1 shadow-sm">
+        <div className="flex gap-1 bg-white/80 backdrop-blur-sm rounded-full p-1.5 shadow-[var(--shadow)]">
           {(["recents", "friends", "popular"] as const).map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all ${
+              className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
                 activeTab === tab
-                  ? "bg-[var(--color-primary)] text-white"
-                  : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)]"
+                  ? "bg-[var(--color-primary)] text-white shadow-md"
+                  : "text-[var(--color-muted-foreground)] hover:text-[var(--color-foreground)] hover:bg-white/50"
               }`}
             >
               {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -161,11 +166,11 @@ export default function SocialFeed() {
       </div>
 
       {/* Posts */}
-      <div className="space-y-4">
+      <div className="space-y-5">
         {posts.map((post, index) => (
           <div 
             key={post.id}
-            style={{ animationDelay: `${index * 100}ms` }}
+            style={{ animationDelay: `${index * 80}ms` }}
             className="animate-[fadeIn_0.4s_ease-out_forwards] opacity-0"
           >
             <PostCard
